@@ -70,33 +70,33 @@ The `web-socket` element ease the usage of WebSockets.
             notify: true,
             readOnly: true
           },
-          /**
-           * The most recent request made by this web-socket element.
-           * @type {Object}
-           */
-          lastRequest: {
-            type: Object,
-            notify: true,
-            readOnly: true
-          },
-          /**
-           * The most recent response received by this web-socket element.
-           * @type {Object}
-           */
-          lastResponse: {
-            type: Object,
-            notify: true,
-            readOnly: true
-          },
-          /**
-           * The most recent error received by this web-socket element. If any error occurred.
-           * @type {Object}
-           */
-          lastError: {
-            type: Object,
-            notify: true,
-            readOnly: true
-          },
+          // /**
+          //  * The most recent request made by this web-socket element.
+          //  * @type {Object}
+          //  */
+          // lastRequest: {
+          //   type: Object,
+          //   notify: true,
+          //   readOnly: true
+          // },
+          // /**
+          //  * The most recent response received by this web-socket element.
+          //  * @type {Object}
+          //  */
+          // lastResponse: {
+          //   type: Object,
+          //   notify: true,
+          //   readOnly: true
+          // },
+          // /**
+          //  * The most recent error received by this web-socket element. If any error occurred.
+          //  * @type {Object}
+          //  */
+          // lastError: {
+          //   type: Object,
+          //   notify: true,
+          //   readOnly: true
+          // },
           /**
            * The actual websocket object.
            * @type {Object}
@@ -166,7 +166,33 @@ The `web-socket` element ease the usage of WebSockets.
         if (this.verbose) {
           console.info(this.id + " : WebSocket [%s] received message.", this.url, event);
         }
-        this._setLastResponse(JSON.parse(event.data));
+        this.dispatchEvent(
+          new CustomEvent(
+            'last-response-changed',
+            {
+              composed: false,
+              bubbles: false,
+              detail: {
+                value: event.data
+              }
+            }
+          )
+        );
+      }
+
+      _setLastError(e) {
+        this.dispatchEvent(
+          new CustomEvent(
+            'ws-error',
+            {
+              composed: true,
+              bubbles: true,
+              detail: {
+                error: e
+              }
+            }
+          )
+        );
       }
 
       /**
@@ -195,7 +221,7 @@ The `web-socket` element ease the usage of WebSockets.
         var _ws = this._getWebSocket();
         if (_ws != null) {
           if (_ws.readyState === OPEN) {
-            var _data = JSON.stringify(data);
+            var _data = data;
             try {
               _ws.send(_data);
             } catch (err) {
@@ -204,7 +230,7 @@ The `web-socket` element ease the usage of WebSockets.
               }
               this._setLastError(err);
             }
-            this._setLastRequest(_data);
+            // this._setLastRequest(_data);
           } else {
             if (this.verbose) {
               console.warn(this.id + " : WebSocket connection to [%s] isn't open.", this.url);

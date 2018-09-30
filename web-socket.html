@@ -185,8 +185,8 @@ The `web-socket` element ease the usage of WebSockets.
           new CustomEvent(
             'ws-error',
             {
-              composed: true,
-              bubbles: true,
+              composed: false,
+              bubbles: false,
               detail: {
                 error: e
               }

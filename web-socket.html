@@ -183,7 +183,7 @@ The `web-socket` element ease the usage of WebSockets.
       _setLastError(e) {
         this.dispatchEvent(
           new CustomEvent(
-            'ws-error',
+            'last-error-changed',
             {
               composed: false,
               bubbles: false,

@@ -24,10 +24,10 @@ The `web-socket` element ease the usage of WebSockets.
     const CLOSING = 2;
     const CLOSED = 3;
 
-    class WebSocket extends Polymer.Element {
+    class IronWebSocket extends Polymer.Element {
 
       static get is() {
-        return 'web-socket';
+        return 'iron-web-socket';
       }
 
       static get properties() {
@@ -164,7 +164,7 @@ The `web-socket` element ease the usage of WebSockets.
        */
       onMessage(event) {
         if (this.verbose) {
-          console.info(this.id + " : WebSocket [%s] received message.", this.url, event);
+          console.debug(this.id + " : WebSocket [%s] received message.", this.url, event);
         }
         this.dispatchEvent(
           new CustomEvent(
@@ -309,6 +309,6 @@ The `web-socket` element ease the usage of WebSockets.
         return _ws;
       }
     }
-    window.customElements.define(WebSocket.is, WebSocket);
+    window.customElements.define(IronWebSocket.is, IronWebSocket);
   </script>
 </dom-module>
